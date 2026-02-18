@@ -16,8 +16,8 @@ namespace winpspy
         static Dictionary<int, Process> activeProcesses = new Dictionary<int, Process>();
         static List<String> activePipes = new List<String>();
         static StreamWriter logWriter;
-        static readonly string[] Blacklist = { "AutomaticDestinations" };
-        static readonly string[] Keywords = { "exampleKeyword" };
+        static readonly string[] Blacklist = { "AutomaticDestinations", "\\Edge\\User Data\\", "\\WindowsApps\\", "\\Local\\Packages\\", "SoftwareDistribution", "\\Windows\\", "Windows Defender", "DriverStore", "System32", "winpspy-master", "\\Microsoft\\" };
+        static readonly string[] Keywords = { "\\Users\\", ".db", ".bak", "backup", "admin" };
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         struct WIN32_FIND_DATA
@@ -64,7 +64,7 @@ namespace winpspy
             var procTimer = new System.Timers.Timer(1000);
             procTimer.Enabled = true;
             procTimer.Elapsed += new ElapsedEventHandler(ProcDump);
-            procTimer.Elapsed += new ElapsedEventHandler(PipeDump);
+            //procTimer.Elapsed += new ElapsedEventHandler(PipeDump);
             procTimer.Start();
 
             // Monitor File Changes
